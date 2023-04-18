@@ -1,0 +1,554 @@
+basePath: /
+definitions:
+  models.Comment:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      message:
+        type: string
+      photo_id:
+        type: integer
+      updated_at:
+        type: string
+      userID:
+        type: integer
+    required:
+    - message
+    - photo_id
+    type: object
+  models.Photo:
+    properties:
+      caption:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      photo_url:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      userID:
+        type: integer
+    required:
+    - photo_url
+    - title
+    type: object
+  models.SocialMedia:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      social_media_url:
+        type: string
+      updated_at:
+        type: string
+      userID:
+        type: integer
+    required:
+    - name
+    - social_media_url
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: mygram@bagusseptianto.com
+    name: Bagus Septianto
+    url: http://bagusseptianto.com/
+  description: DTS FGA KOMINFO Hacktiv8 Golang-6
+  title: My Gram
+  version: "1.0"
+paths:
+  /comment/CreateComment:
+    post:
+      consumes:
+      - application/json
+      description: Creating a Comment
+      parameters:
+      - description: Comment Fields
+        in: body
+        name: Comment
+        required: true
+        schema:
+          example: '{"photo_id":1,"message":"Lorem ipsum dolor sit amet"}'
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Comment
+          schema:
+            $ref: '#/definitions/models.Comment'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Create a Comment
+      tags:
+      - Comment
+  /comment/DeleteComment/{CommentID}:
+    delete:
+      description: Deleting a Comment by CommentID
+      parameters:
+      - description: Comment ID
+        in: path
+        name: CommentID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Delete a Comment
+      tags:
+      - Comment
+  /comment/GetAll:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Comment'
+            type: array
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Read all Comments
+      tags:
+      - Comment
+  /comment/GetOne/{CommentID}:
+    get:
+      consumes:
+      - application/json
+      description: Reading a Comment based on CommentID
+      parameters:
+      - description: Comment ID
+        in: path
+        name: CommentID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Comment'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Read a Comment by ID
+      tags:
+      - Comment
+  /comment/UpdateComment/{CommentID}:
+    put:
+      consumes:
+      - application/json
+      description: Updating a Comment by CommentID
+      parameters:
+      - description: Comment ID
+        in: path
+        name: CommentID
+        required: true
+        type: integer
+      - description: Comment Fields
+        in: body
+        name: Comment
+        required: true
+        schema:
+          example: '{"photo_id":1,"message":"Lorem ipsum dolor sit amet"}'
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Comment
+          schema:
+            $ref: '#/definitions/models.Comment'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Update a Comment
+      tags:
+      - Comment
+  /photo/CreatePhoto:
+    post:
+      consumes:
+      - application/json
+      description: Creating a Photo
+      parameters:
+      - description: Photo Fields
+        in: body
+        name: Photo
+        required: true
+        schema:
+          example: '{"title":"Lorem Ipsum","caption":"Lorem ipsum dolor sit amet","photo_url":"https://css.category.id/cat.jpg"}'
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Photo
+          schema:
+            $ref: '#/definitions/models.Photo'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Create a Photo
+      tags:
+      - Photo
+  /photo/DeletePhoto/{PhotoID}:
+    delete:
+      description: Deleting a Photo by PhotoID
+      parameters:
+      - description: Photo ID
+        in: path
+        name: PhotoID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Delete a Photo
+      tags:
+      - Photo
+  /photo/GetAll:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Photo'
+            type: array
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Read all Photos
+      tags:
+      - Photo
+  /photo/GetOne/{PhotoID}:
+    get:
+      consumes:
+      - application/json
+      description: Reading a Photo based on PhotoID
+      parameters:
+      - description: Photo ID
+        in: path
+        name: PhotoID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Photo'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Read a Photo by ID
+      tags:
+      - Photo
+  /photo/UpdatePhoto/{PhotoID}:
+    put:
+      consumes:
+      - application/json
+      description: Updating a Photo by PhotoID
+      parameters:
+      - description: Photo ID
+        in: path
+        name: PhotoID
+        required: true
+        type: integer
+      - description: Photo Fields
+        in: body
+        name: Photo
+        required: true
+        schema:
+          example: '{"title":"Lorem Ipsum","caption":"Lorem ipsum dolor sit amet","photo_url":"https://css.category.id/cat.jpg"}'
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Photo
+          schema:
+            $ref: '#/definitions/models.Photo'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Update a Photo
+      tags:
+      - Photo
+  /socialmedia/CreateSocialMedia:
+    post:
+      consumes:
+      - application/json
+      description: Creating a SocialMedia
+      parameters:
+      - description: SocialMedia Fields
+        in: body
+        name: SocialMedia
+        required: true
+        schema:
+          example: '{"name":"bob","social_media_url":"https://bagusseptianto.com"}'
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: SocialMedia
+          schema:
+            $ref: '#/definitions/models.SocialMedia'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Create a SocialMedia
+      tags:
+      - SocialMedia
+  /socialmedia/DeleteSocialMedia/{SocialMediaID}:
+    delete:
+      description: Deleting a SocialMedia by SocialMediaID
+      parameters:
+      - description: SocialMedia ID
+        in: path
+        name: SocialMediaID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Delete a SocialMedia
+      tags:
+      - SocialMedia
+  /socialmedia/GetAll:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SocialMedia'
+            type: array
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Read all SocialMedia
+      tags:
+      - SocialMedia
+  /socialmedia/GetOne/{SocialMediaID}:
+    get:
+      consumes:
+      - application/json
+      description: Reading a SocialMedia based on SocialMediaID
+      parameters:
+      - description: SocialMedia ID
+        in: path
+        name: SocialMediaID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SocialMedia'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Read a SocialMedia by ID
+      tags:
+      - SocialMedia
+  /socialmedia/UpdateSocialMedia/{SocialMediaID}:
+    put:
+      consumes:
+      - application/json
+      description: Updating a SocialMedia by SocialMediaID
+      parameters:
+      - description: SocialMedia ID
+        in: path
+        name: SocialMediaID
+        required: true
+        type: integer
+      - description: SocialMedia Fields
+        in: body
+        name: SocialMedia
+        required: true
+        schema:
+          example: '{"name":"bob","social_media_url":"https://bagusseptianto.com"}'
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: SocialMedia
+          schema:
+            $ref: '#/definitions/models.SocialMedia'
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+      security:
+      - BearerAuth: []
+      summary: Update a SocialMedia
+      tags:
+      - SocialMedia
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: Logging in user with username and password
+      parameters:
+      - description: user credential
+        in: body
+        name: UserCredential
+        required: true
+        schema:
+          example: '{"username":"username","password":"12345678"}'
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token
+          schema:
+            type: string
+        "401":
+          description: invaild username/password
+      summary: Login User
+      tags:
+      - User
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      description: Creating new user
+      parameters:
+      - description: User
+        in: body
+        name: User
+        required: true
+        schema:
+          example: '{"username":"username","password":"12345678","email":"email@bagusseptianto.com","age":21}'
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+      summary: Register User
+      tags:
+      - User
+securityDefinitions:
+  BearerAuth:
+    description: Bearer Token. Please add "Bearer " + your token
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
